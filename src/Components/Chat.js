@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import React, { useState, useEffect } from "react";
 import LogOut from "./LogOut";
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
 import {
   query,
   collection,
@@ -10,6 +10,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import SendMessage from "./SendMessage";
+import "../App.css";
 
 function Chat() {
   const [messages, setMessages] = useState([]);
@@ -23,7 +24,7 @@ function Chat() {
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       console.log("🚀 ~ unsubscribe ~ snapshot:", snapshot);
-      setMessages(snapshot.docs.map((doc) => doc.data()));
+      setMessages(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
     // Cleanup function
     return () => unsubscribe();
@@ -40,14 +41,22 @@ function Chat() {
 
   return (
     <div>
-      <LogOut />
-      <div className="messages">
+      <div className="logOut">
+        <LogOut />
+      </div>
+      <div className="msgs">
         {messages.map(({ id, text, photoURL, uid, createdAt }) => (
           <div key={id}>
-            <div>
-              <img src={photoURL} alt="" />
+            <div
+              className={`msg ${
+                uid === auth.currentUser.uid ? "sent" : "received"
+              }`}
+            >
+              <img src={photoURL} alt="icon" />
               <p>{text}</p>
-              <p>{createdAt?.toDate().toLocaleString()}</p>
+              <p className="timeStamp">
+                {createdAt?.toDate().toLocaleString()}
+              </p>
             </div>
           </div>
         ))}
