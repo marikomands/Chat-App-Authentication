@@ -20,7 +20,7 @@ body {
 img {
   border-radius: 50%;
   height: 45px;
-  margin-top: -20px;
+  margin-top: -10px;
   border: 2px solid black;
 }
 
@@ -36,15 +36,15 @@ p {
 }
 
 .timeStamp {
-  font-weight: 200px;
   font-size: x-small;
+  font-weight: lighter;
 }
 
 .msg {
   background-color: red;
   display: flex;
-  /* padding: 20px 10px 0 20px; */
-  margin: 20px;
+  padding: 20px 10px 0 20px;
+  margin: 30px;
   border-radius: 3000px;
   box-shadow: 0 0 10px rgb(179, 206, 209);
   align-items: center;
