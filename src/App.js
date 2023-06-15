@@ -6,7 +6,12 @@ import "./App.css";
 
 function App() {
   const [user] = useAuthState(auth);
-  return <div className="App">{user ? <Chat /> : <SignIn />}</div>;
+
+  return (
+    <div>
+      <div className="App">{user ? <Chat /> : <SignIn />}</div>
+    </div>
+  );
 }
 
 export default App;
