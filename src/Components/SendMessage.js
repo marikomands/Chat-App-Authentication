@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import { db, auth } from "../firebase.js";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Input } from "@mui/material";
@@ -38,7 +40,13 @@ function SendMessage() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button>Send</button>
+          <Button
+            variant="contained"
+            endIcon={<SendIcon />}
+            onClick={sendMessage}
+          >
+            Send
+          </Button>
         </div>
       </form>
     </div>
