@@ -5,7 +5,7 @@ import Chat from "./Components/Chat";
 import "./App.css";
 
 function App() {
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth); // check if user is signin or not
 
   return (
     <div>
