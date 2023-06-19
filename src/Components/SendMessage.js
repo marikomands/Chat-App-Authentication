@@ -8,23 +8,36 @@ import { Input } from "@mui/material";
 
 function SendMessage() {
   const [message, setMessage] = useState("");
+  console.log("🚀 ~ SendMessage ~ message:", message);
+  const [error, setError] = useState(null);
+  console.log("🚀 ~ SendMessage ~ error:", error);
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { photoURL, uid } = auth.currentUser;
+    if (!auth) {
+      setError("Authentification Error");
+      return;
+    }
 
-    addDoc(collection(db, "messages"), {
-      text: message,
-      photoURL,
-      uid,
-      createdAt: serverTimestamp(),
-    });
-    setMessage("");
+    try {
+      const { photoURL, uid } = auth.currentUser;
+
+      await addDoc(collection(db, "messages"), {
+        text: message,
+        photoURL,
+        uid,
+        createdAt: serverTimestamp(),
+      });
+      setMessage("");
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
     <div>
+      {error && <p>{error}</p>}
       <form onSubmit={sendMessage}>
         <div className="sendMsg">
           <Input
