@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Button } from "@mui/material";
 import CallIcon from "@mui/icons-material/Call";
 import { auth } from "../firebase.js";
 import { signOut } from "firebase/auth";
+import SignIn from "./SignIn";
 
 function LogOut() {
   const [user, loading, error] = useAuthState(auth);
+
+  // const signInAsDifferentUser = () => {
+  //   signOut(auth);
+  //   setShowSignIn(true);
+
+  //   if (showSignIn) {
+  //     return <SignIn />;
+  //   }
+  // };
 
   const userName = () => {
     if (loading) {
@@ -18,6 +28,7 @@ function LogOut() {
 
     if (user) {
       if (user.displayName) {
+        // can get displayName by auth.currentUser.displayName
         return (
           <div
             style={{
@@ -46,6 +57,12 @@ function LogOut() {
       >
         Log Out
       </Button>
+      {/* <h5
+        style={{ fontFamily: "Roboto, sans-serif", fontWeight: "lighter" }}
+        onClick={signInAsDifferentUser}
+      >
+        sign in using a different user name
+      </h5> */}
       <h3>{userName()}</h3>
       <CallIcon />
     </div>
